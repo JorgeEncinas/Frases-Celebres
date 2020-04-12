@@ -12,7 +12,8 @@
 #                 Es un porcentaje.
 
 import argparse #1 punto
-import csv
+import csv #puede omitirse gracias a frases.py
+import frases
 import Levenshtein #¿Se usará?
 
 # 7 pts
@@ -38,6 +39,7 @@ def frases_misma_fuente():  # agregar una funcion que obtenga frases célebres d
 
 
 def main( archivo, frase, limite ): #1 punto
+    listado=frases.carga_csv(archivo)
     filtrado_frases()               #2 pts por llamarla
     despliega_frases()              #2 pt por llamarla
     print("Hola compañeros")
