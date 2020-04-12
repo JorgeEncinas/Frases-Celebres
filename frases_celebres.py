@@ -18,7 +18,7 @@ import Levenshtein #¿Se usará?
 
 # 7 pts
 
-def filtrado_frases():      # Funcion de filtrado de frases
+def filtrado_frases(listado,frase):      # Funcion de filtrado de frases
     return 1
 
 # 5 pts
@@ -40,7 +40,7 @@ def frases_misma_fuente():  # agregar una funcion que obtenga frases célebres d
 
 def main( archivo, frase, limite ): #1 punto
     listado=frases.carga_csv(archivo)
-    filtrado_frases()               #2 pts por llamarla
+    filtrado_frases(listado,frase)               #2 pts por llamarla
     despliega_frases()              #2 pt por llamarla
     print("Hola compañeros")
 
