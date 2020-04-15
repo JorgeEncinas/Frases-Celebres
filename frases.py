@@ -13,21 +13,19 @@ def carga_csv(archivo):
         print(e)
     return lista
 
+def levDistance(archivo, texto, max_dist):
+    listado = carga_csv(archivo)
+    lista=[]
+    print("Frase a buscar: %s" % texto)
+    for linea in listado:
+        pelicula = linea[1]
+        frase = linea[0]
+        distancia = Levenshtein.ratio(frase, texto)
+        if distancia > max_dist:
+            elemento=(distancia, frase, pelicula)
+            lista.append(elemento)
+    return lista
 
 
 
-archivo = "frases.csv"
-
-
-listado = carga_csv(archivo)
-#texto   = "salva una vida, salva al mundo"
-texto   = "Todos esos momentos se perderán en el tiempo"
-max_dist = 0
-print("Frase a buscar: %s" % texto)
-for linea in listado:
-    pelicula = linea[1]
-    frase = linea[0]
-    distancia = Levenshtein.ratio(frase, texto)
-    if distancia > 0.50:
-        print(distancia, frase, pelicula)
 

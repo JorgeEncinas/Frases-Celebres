@@ -18,13 +18,16 @@ import Levenshtein #¿Se usará?
 
 # 7 pts
 
-def filtrado_frases(listado,frase):      # Funcion de filtrado de frases
-    return 1
+def filtrado_frases(listado,frase,limite):      # Funcion de filtrado de frases
+        lista=frases.levDistance(listado,frase,limite)
+        return lista
+
 
 # 5 pts
 
-def despliega_frases():     # despliegue() que despliega lista de frases filtradas
-    print("Lista de frases")
+def despliega_frases(lista):     # despliegue() que despliega lista de frases filtradas
+    for elemento in lista:
+        print("\"",elemento[1],"\""," - ", elemento[2], ":",elemento[0])
 
 # EXTRA ---- LEAN EL 3 ----------------------------------------------------------
 
@@ -39,16 +42,14 @@ def frases_misma_fuente():  # agregar una funcion que obtenga frases célebres d
 
 
 def main( archivo, frase, limite ): #1 punto
-    listado=frases.carga_csv(archivo)
-    filtrado_frases(listado,frase)               #2 pts por llamarla
-    despliega_frases()              #2 pt por llamarla
-    print("Hola compañeros")
+    listaso=filtrado_frases(archivo,frase,limite)               #2 pts por llamarla
+    despliega_frases(listaso)              #2 pt por llamarla
 
 if __name__ == "__main__":      #1 punto
     parse =argparse.ArgumentParser()
     parse.add_argument("-a","--archivo",dest="archivo",required=False,default="frases.csv") #2 pts
     parse.add_argument("-f", "--frase", dest="frase")                                       #2 pts
-    parse.add_argument("-l", "--limite", dest="limite", type=int)                           #2 pts
+    parse.add_argument("-l", "--limite", dest="limite", type=float)                           #2 pts
     args = parse.parse_args()
     archivo = args.archivo
     frase = args.frase
