@@ -5,7 +5,7 @@ import Levenshtein
 def carga_csv(archivo):
     lista = []
     try:
-        with open(archivo,'r') as fh:
+        with open(archivo,'r', encoding="UTF-8") as fh:
             lector_csv = csv.reader(fh)
             for linea in lector_csv:
                 lista.append(linea)
@@ -21,7 +21,7 @@ def levDistance(archivo, texto, max_dist):
         pelicula = linea[1]
         frase = linea[0]
         distancia = Levenshtein.ratio(frase, texto)
-        if distancia > max_dist:
+        if distancia >= max_dist:
             elemento=(distancia, frase, pelicula)
             lista.append(elemento)
     return lista

@@ -42,14 +42,16 @@ def frases_misma_fuente():  # agregar una funcion que obtenga frases célebres d
 
 
 def main( archivo, frase, limite ): #1 punto
+    if limite > 1:
+        limite = limite/100
     listaso=filtrado_frases(archivo,frase,limite)               #2 pts por llamarla
-    despliega_frases(listaso)              #2 pt por llamarla
+    despliega_frases(listaso)                                   #2 pt por llamarla
 
 if __name__ == "__main__":      #1 punto
     parse =argparse.ArgumentParser()
-    parse.add_argument("-a","--archivo",dest="archivo",required=False,default="frases.csv") #2 pts
-    parse.add_argument("-f", "--frase", dest="frase")                                       #2 pts
-    parse.add_argument("-l", "--limite", dest="limite", type=float)                           #2 pts
+    parse.add_argument("-a","--archivo",dest="archivo",required=False,default="frases.csv")     #2 pts
+    parse.add_argument("-f", "--frase", dest="frase")                                           #2 pts
+    parse.add_argument("-l", "--limite", dest="limite", type=float, required = False, default = 0.50)                             #2 pts
     args = parse.parse_args()
     archivo = args.archivo
     frase = args.frase
