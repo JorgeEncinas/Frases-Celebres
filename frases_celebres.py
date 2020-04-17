@@ -11,27 +11,23 @@
 #   -l --limite   Límite menor para resultados iguales o mayores a la tasa/radio de similitud proporcionado. 
 #                 Es un porcentaje.
 
-import argparse #1 punto
-import csv #puede omitirse gracias a frases.py
+import argparse
 import frases
-import Levenshtein #¿Se usará?
 import time
 
-# 7 pts
+def filtrado_frases(listado,frase,limite):
+    ''' Recibe el archivo de frases, la frase, y el porcentaje, y llama a frases.py para ejecutar la funcion. \
+    Regresa la lista de frases relevantes en tuplas de tres elementos.'''
+    lista=frases.levDistance(listado,frase,limite)
+    return lista
 
-def filtrado_frases(listado,frase,limite):      # Funcion de filtrado de frases
-        lista=frases.levDistance(listado,frase,limite)
-        return lista
-
-# 5 pts
-
-def despliega_frases(lista):     # despliegue() que despliega lista de frases filtradas
-    #lista_titulos = []
+def despliega_frases(lista):
+    ''' Despliega la lista de frases que tienen relación con la frase introducida. \
+    Regresa un diccionario con ellas para evitar repetirlas al listar otras frases de la misma película.'''
     dfrv = dict()
     if len(lista) > 0:
         typing("Pyshtein: Hemos encontrado una coincidencia en nuestra base de datos !(•̀ᴗ•́)و ̑̑ ")
         for elemento in lista:
-            #frase_temp = "\"",elemento[1],"\""," - ", elemento[2], ":",elemento[0]
             frase_temp = "Con coincidencia de {}% -> \" {} \" - {}".format(round(elemento[0]*100, 2), elemento[1], elemento[2])
             typing(frase_temp)
             if elemento[2] not in dfrv.keys():
@@ -43,17 +39,16 @@ def despliega_frases(lista):     # despliegue() que despliega lista de frases fi
     return dfrv
 
 def typing( frase ):
+    ''' Pyshtein: ¡Con esta función simulo hablar lentamente!. Recibo la frase a decir y la escribo tomando pausas.'''
     for letra in frase:
         print(letra, end="", flush = True)
         time.sleep(0.05)
     print("")
 
-# EXTRA ---- LEAN EL 3 ----------------------------------------------------------
-
-# 2 pts ------ 
-
-def frases_mf( dfrv ):  # agregar una funcion que obtenga frases célebres de la misma fuente (si existen)
-    dict_tf = frases.findme(dfrv, archivo) # y cree una nueva lista, que pueda ser desplegada por la función de despliegue()
+def frases_mf( dfrv ):
+    ''' Recibe un diccionario de frases que ya se imprimieron. \
+    Imprime las demás frases de los títulos que tuvieron coincidencia. '''
+    dict_tf = frases.findme(dfrv, archivo)
     typing("Pyshtein: Veamos, qué otras frases de los títulos hay (‘•̀ ▽ •́ )✎") 
     for titulo, lista_frases in dict_tf.items():
         if len(lista_frases) > 0:
@@ -64,28 +59,28 @@ def frases_mf( dfrv ):  # agregar una funcion que obtenga frases célebres de la
 
 # 3 pts ---> En lugar de usar funciones, usar objetos (clases y métodos)
 
-
-
-
 def main( archivo, frase, limite ): #1 punto
     typing("Pyshtein: ¡Hola, soy Pyshtein!")
     if limite > 1:
         limite = limite/100
+        if limite > 1:
+            typing("Pyshtein: Pusiste un número muy grande! (　ﾟДﾟ)＜!! \nPyshtein: Pondré el límite en 50% ٩(ˊᗜˋ*)و")
+            limite = 0.50
     elif limite < 0:
         typing("Pyshtein: ¿Qué crees que haces? Ese número no es un porcentaje de algún tipo (　ﾟДﾟ)＜!!")
     if len(frase) < 1:
-        typing("Pyshtein: ¡No pusiste una frase! ( ‾᷅⚰‾᷄ ) \nInténtalo de nuevo ₍₍ ◝(•̀ㅂ•́)◟ ⁾⁾")
+        typing("Pyshtein: ¡No pusiste una frase! ( ‾᷅⚰‾᷄ ) \nPyshtein: Inténtalo de nuevo ₍₍ ◝(•̀ㅂ•́)◟ ⁾⁾")
     else:
-        listaso=filtrado_frases(archivo,frase,limite)               #2 pts por llamarla
-        dfrv = despliega_frases(listaso)                   #2 pt por llamarla
+        typing("Porcentaje mínimo de búsqueda: {}%".format(round(limite*100, 2)))
+        listaso=filtrado_frases(archivo,frase,limite)
+        dfrv = despliega_frases(listaso)
         if len(dfrv) > 0:
             frases_mf( dfrv )
         
-
-if __name__ == "__main__":      #1 punto
+if __name__ == "__main__":
     parse =argparse.ArgumentParser()
-    parse.add_argument("-a","--archivo",dest="archivo",required=False,default="frases.csv")     #2 pts
-    parse.add_argument("-f", "--frase", dest="frase", required=False, default="")               #2 pts
+    parse.add_argument("-a","--archivo",dest="archivo",required=False,default="frases.csv")
+    parse.add_argument("-f", "--frase", dest="frase", required=False, default="")
     parse.add_argument("-l", "--limite", dest="limite", type=float, required = False, default = 0.50)                             #2 pts
     args = parse.parse_args()
     archivo = args.archivo

@@ -4,6 +4,7 @@ import frases_celebres
 
 
 def carga_csv(archivo):
+    '''Recibe un archivo csv y regresa una lista con cada una de sus líneas.'''
     lista = []
     try:
         with open(archivo,'r', encoding="UTF-8") as fh:
@@ -15,6 +16,7 @@ def carga_csv(archivo):
     return lista
 
 def normalize(s):
+    '''Quita acentos, puntos, comas, signos, y regresa.'''
     replacements = (
         ("á", "a"),
         ("é", "e"),
@@ -39,6 +41,8 @@ def normalize(s):
     return s    
 
 def findme( dfrv, archivo ):
+    '''Recibe un diccionario titulo:[lista_de_frases] y un archivo. regresa un diccionario del mismo tipo, \
+    pero con aquellas frases que no se hayan impreso.'''
     dict_tf = dict()
     for titulo in dfrv.keys():
         dict_tf[titulo] = []
@@ -50,6 +54,8 @@ def findme( dfrv, archivo ):
     return dict_tf
 
 def levDistance(archivo, texto, max_dist):
+    '''Calcula la distancia Levenshtein y a partir de ella regresa una lista con sólo aquellas frases que \
+    cumplan con la distancia límite establecida.'''
     listado = carga_csv(archivo)
     lista=[]
     frases_celebres.typing("Frase a buscar: \"%s\"  (￣∇￣*)ゞ" % texto)
