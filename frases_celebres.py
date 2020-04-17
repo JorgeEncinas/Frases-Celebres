@@ -59,7 +59,7 @@ def frases_mf( dfrv ):
 
 # 3 pts ---> En lugar de usar funciones, usar objetos (clases y métodos)
 
-def main( archivo, frase, limite ): #1 punto
+def main( archivo, frase, limite ):
     typing("Pyshtein: ¡Hola, soy Pyshtein!")
     if limite > 1:
         limite = limite/100
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     parse =argparse.ArgumentParser()
     parse.add_argument("-a","--archivo",dest="archivo",required=False,default="frases.csv")
     parse.add_argument("-f", "--frase", dest="frase", required=False, default="")
-    parse.add_argument("-l", "--limite", dest="limite", type=float, required = False, default = 0.50)                             #2 pts
+    parse.add_argument("-l", "--limite", dest="limite", type=float, required = False, default = 0.50)
     args = parse.parse_args()
     archivo = args.archivo
     frase = args.frase
